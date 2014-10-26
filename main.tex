@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
-\usepackage{graphicx, wrapfig}
+\usepackage{wrapfig}
+\usepackage[parfill]{parskip}
 
 \title{Summary SPMS}
 \author{Nicky van Rijsbergen}
@@ -60,9 +61,9 @@ Mobile devices often contain a lot of valuable data. Unfortunately, this data is
 
 \subsubsection*{Some characteristics of bluetooth}
 \begin{itemize}
-\item 2.4GHz ISM band, class 1 up to 100m, class 2 up to 10m and class 3 up to 1m.
+\item 2.4GHz ISM band, class 1 up to 100m, class 2 up to 10m and class 3 up to 1m. (range can be extended with high-gain antennas and amplifiers, so the range should not be considered as secure)
 \item Security goals: confidentiality, authentication, authorization.
-\item Threats: eavedropping, man in the middle attacks, denial of service.
+\item Threats: eavesdropping, man in the middle attacks, denial of service.
 \end{itemize}
 
 Bluetooth comes with built-in security. There are several modes which will be described below. In the end only mode 4 can be secure and all other modes can easily be broken.
@@ -89,6 +90,10 @@ If $K_{AB}$ is known, then skip to step 3
 \item Link key $K_{AB}$ is generated from $LK\_RAND_{A}$, $LK\_RAND_{B}$, $K_{init}$ and MACs.
 \item Challenge response authentication: slave authenticates to master with $AU\_RAND_A$, $K_{AB}$ and $MAC_B$.
 \end{enumerate}
+
+
+
+
 \newpage
 
 The only secret in this entire communication is the PIN code used. This PIN can easily be bruteforced~\cite{shaked2005cracking}:
@@ -136,7 +141,7 @@ An inevitable consequence of the abusive use of drugs is low energy. To counter 
 \label{fig:bt_authentication_4.0}
 \end{figure}
 
-At first a temporary key is send. With Passkey Entry this is a value between 0 and 999999, with Just Works this is 0 and with OOB this is a 128 bit value. Then each device confirms $E_{TK}(Rand, PairingMessages, Addresses)$ and they reveal Rand if this can be confirmed. Then a Short Term Key is calculated: STK = $E_{TK}(S_{Rand} || M_{Rand})$. Only OOB will probably provide some security (confidentiality and authentication) as the other two provide a TK that is easily guessable. Figure~\ref{fig:bt_authentication_4.0} gives an overview of 
+At first a temporary key is sent. With Passkey Entry this is a value between 0 and 999999, with Just Works this is 0 and with OOB this is a 128 bit value. Then each device confirms $E_{TK}(Rand, PairingMessages, Addresses)$ and they reveal Rand if this can be confirmed. Then a Short Term Key is calculated: STK = $E_{TK}(S_{Rand} || M_{Rand})$. Only OOB will probably provide some security (confidentiality and authentication) as the other two provide a TK that is easily guessable. Figure~\ref{fig:bt_authentication_4.0} gives an overview of 
 
 \section*{5. Security of GSM/UMTS/LTE}
 The network of GSM consists of several parts. I think that figure \ref{fig:gsm_network_architecture} gives a nice overview and below is short description of every part.
@@ -252,7 +257,7 @@ NFC is a set of standards for communication between cellphones, readers and pass
 
 Some problems with NFC are that the standard proposes no authentication and encryption schemes. Also privacy may be an issue as these tags may reveal the ID.
 
-Figure \ref{fig:crypto1overview} gives an overview of the crypto-1 cipher which was used in MIFARE. The LFSR has a weak random number generator. Another weakness is the 16 bit random number and the authentication protocol leaks keystream.
+Figure \ref{fig:crypto1overview} gives an overview of the crypto-1 cipher which was used in MIFARE classic. The LFSR has a weak random number generator. Another weakness is the 16 bit random number and the authentication protocol leaks keystream.
 
 \begin{figure}[!h]
 \centering
